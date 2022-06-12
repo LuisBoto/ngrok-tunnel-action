@@ -11,12 +11,16 @@ inputs:
     required: true
     default: '1h'
   tunnel_type:
-    description: 'Type of ngrok tunnel, TCP or http'
+    description: 'Type of ngrok tunnel, tcp or http'
     required: true
     default: 'tcp'
   port:
     description: 'The port to forward traffic to'
     required: true
+  save_url_to_filename:
+    description: 'Save the tunnel's URL to a file with the provided name'
+    required: false
+    default: 'url.txt'
   ngrok_authtoken:
     description: 'Ngrok authorization token'
     required: true
@@ -31,4 +35,6 @@ runs:
     - run: ./ngrok authtoken ${{ inputs.ngrok_authtoken }}
       shell: bash
     - run: ( timeout ${{ inputs.timeout }} ./ngrok ${{ inputs.tunnel_type }} ${{ inputs.port }} ) &
+      shell: bash
+    - run: echo ( curl http://127.0.0.1:4040/api/tunnels | jq -r ".tunnels[0].public_url" | tail -c 21 )
       shell: bash
