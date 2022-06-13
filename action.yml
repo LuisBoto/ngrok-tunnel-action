@@ -1,9 +1,9 @@
 name: 'Ngrok Tunnel Action'
-description: 'A github action to tunnel traffic from within Workflow environment'
+description: 'Tunnel traffic from within a Github Action runner'
 
 branding:
-  icon: 'activity'  
-  color: 'blue'
+  icon: 'compass'
+  color: 'red'
 
 inputs:
   timeout:  
