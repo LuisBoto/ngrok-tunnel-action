@@ -14,7 +14,7 @@ This action accepts the following parameters:
 | port | The port in localhost to forward traffic from/to  | Yes | - |
 | ngrok_authtoken | Your ngrok authtoken| Yes | - |
 | tunnel_type | Whether the tunnel type will be TCP or HTTP | Yes | tcp |
-| save_url_to_filename | If provided, save the deployed tunnel's URL to a file with the provided name, otherwise just print URL on console | No | url.txt |
+| save_url_to_filename | If provided, save the deployed tunnel's URL to a file with the provided name, otherwise just print URL on console | No | - |
 
 
 Here is an example of using this action:

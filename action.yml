@@ -18,7 +18,6 @@ inputs:
     required: true
   save_url_to_filename:
     description: 'Save the deployed tunnel's URL to a file with the provided name'
-    default: 'url.txt'
   ngrok_authtoken:
     description: 'Ngrok authorization token'
     required: true
