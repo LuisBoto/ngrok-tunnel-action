@@ -17,7 +17,7 @@ inputs:
     description: 'The port to forward traffic to'
     required: true
   save_url_to_filename:
-    description: 'Save the deployed tunnel's URL to a file with the provided name'
+    description: 'Save the deployed tunnel URL to a file with the provided name'
   ngrok_authtoken:
     description: 'Ngrok authorization token'
     required: true
