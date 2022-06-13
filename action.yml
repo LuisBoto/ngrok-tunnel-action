@@ -33,9 +33,15 @@ runs:
       shell: bash
     - run: ( timeout ${{ inputs.timeout }} ./ngrok ${{ inputs.tunnel_type }} ${{ inputs.port }} ) &
       shell: bash
-    - if: "${{ inputs.save_url_to_filename == '' }}"
+    - if: "${{ inputs.save_url_to_filename == '' && inputs.tunnel_type == 'tcp' }}"
       run: ( curl http://127.0.0.1:4040/api/tunnels | jq -r ".tunnels[0].public_url" | tail -c 21 )
       shell: bash
-    - if: "${{ inputs.save_url_to_filename != '' }}"
+    - if: "${{ inputs.save_url_to_filename == '' && inputs.tunnel_type == 'http' }}"
+      run: ( curl http://127.0.0.1:4040/api/tunnels | jq -r ".tunnels[0].public_url" )
+      shell: bash
+    - if: "${{ inputs.save_url_to_filename != '' && inputs.tunnel_type == 'tcp' }}"
       run: ( curl http://127.0.0.1:4040/api/tunnels | jq -r ".tunnels[0].public_url" | tail -c 21 ) > ${{ inputs.save_url_to_filename }}
+      shell: bash
+    - if: "${{ inputs.save_url_to_filename != '' && inputs.tunnel_type == 'http' }}"
+      run: ( curl http://127.0.0.1:4040/api/tunnels | jq -r ".tunnels[0].public_url" ) > ${{ inputs.save_url_to_filename }}
       shell: bash
