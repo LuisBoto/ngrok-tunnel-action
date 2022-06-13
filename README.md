@@ -26,7 +26,7 @@ on: push
 jobs:
 
   deploy:
-    name: Deploy challenge
+    name: Docker container with Ngrok tunnel
     runs-on: ubuntu-latest
     needs: cancel
 
