@@ -42,7 +42,7 @@ jobs:
     - uses: luisboto/ngrok-tunnel-action@<VERSION>
       with:
         timeout: 1h
-        port: 4000
+        port: 8080
         ngrok_authtoken: ${{ secrets.NGROK_AUTHTOKEN }}
         tunnel_type: http
         save_url_to_filename: tunnelURL.md
