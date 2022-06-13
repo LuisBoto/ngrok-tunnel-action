@@ -1,5 +1,5 @@
-name: 'Ngrok TCP Tunelling'
-description: 'A github action for tunelling TCP traffic from within Workflow environemt'
+name: 'Ngrok Tunnel Action'
+description: 'A github action to tunnel traffic from within Workflow environment'
 
 branding:
   icon: 'activity'  
@@ -7,8 +7,7 @@ branding:
 
 inputs:
   timeout:  
-    description: 'Challenge deployment timeout'
-    required: true
+    description: 'Ngrok tunnel deployment timeout'
     default: '1h'
   tunnel_type:
     description: 'Type of ngrok tunnel, tcp or http'
@@ -18,8 +17,7 @@ inputs:
     description: 'The port to forward traffic to'
     required: true
   save_url_to_filename:
-    description: 'Save the tunnel's URL to a file with the provided name'
-    required: false
+    description: 'Save the deployed tunnel's URL to a file with the provided name'
     default: 'url.txt'
   ngrok_authtoken:
     description: 'Ngrok authorization token'
