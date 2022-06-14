@@ -10,7 +10,7 @@ inputs:
     description: 'Ngrok tunnel deployment timeout'
     default: '1h'
   tunnel_type:
-    description: 'Type of ngrok tunnel, tcp or http'
+    description: 'Type of Ngrok tunnel, tcp or http'
     required: true
     default: 'tcp'
   port:
@@ -21,7 +21,12 @@ inputs:
   ngrok_authtoken:
     description: 'Ngrok authorization token'
     required: true
-
+    
+outputs:
+  tunnel-url:
+    description: "Deployed Ngrok tunnel URL"
+    value: ${{ steps.print-tunnel-url.outputs.tunnel-url }}
+    
 runs:
   using: "composite"
   steps: 
@@ -33,15 +38,14 @@ runs:
       shell: bash
     - run: ( timeout ${{ inputs.timeout }} ./ngrok ${{ inputs.tunnel_type }} ${{ inputs.port }} ) &
       shell: bash
-    - if: "${{ inputs.save_url_to_filename == '' && inputs.tunnel_type == 'tcp' }}"
-      run: ( curl http://127.0.0.1:4040/api/tunnels | jq -r ".tunnels[0].public_url" | tail -c 21 )
+      
+    - id: print-tunnel-url
+      run: echo "::set-output name=tunnel-url::$( curl http://127.0.0.1:4040/api/tunnels | jq -r ".tunnels[0].public_url" )"
       shell: bash
-    - if: "${{ inputs.save_url_to_filename == '' && inputs.tunnel_type == 'http' }}"
-      run: ( curl http://127.0.0.1:4040/api/tunnels | jq -r ".tunnels[0].public_url" )
+      
+    - if: "${{ inputs.tunnel_type == 'tcp' }}"
+      run: echo "::set-output name=tunnel-url::$( echo ${{ outputs.tunnel-url }} | tail -c 21 )"
       shell: bash
-    - if: "${{ inputs.save_url_to_filename != '' && inputs.tunnel_type == 'tcp' }}"
-      run: ( curl http://127.0.0.1:4040/api/tunnels | jq -r ".tunnels[0].public_url" | tail -c 21 ) > ${{ inputs.save_url_to_filename }}
-      shell: bash
-    - if: "${{ inputs.save_url_to_filename != '' && inputs.tunnel_type == 'http' }}"
-      run: ( curl http://127.0.0.1:4040/api/tunnels | jq -r ".tunnels[0].public_url" ) > ${{ inputs.save_url_to_filename }}
+    - if: "${{ inputs.save_url_to_filename != '' }}"
+      run: ${{ outputs.tunnel-url }} > ${{ inputs.save_url_to_filename }}
       shell: bash
