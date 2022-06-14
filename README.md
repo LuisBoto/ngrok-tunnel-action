@@ -1,6 +1,6 @@
 # Ngrok tunnel Github Action
 
-This action is based on the code found on [this repository](https://github.com/apogiatzis/ngrok-tunneling-action).
+This action is based on [this repository](https://github.com/apogiatzis/ngrok-tunneling-action).
 
 This is a Github Action that can be used in your Github Workflow to tunnel incoming/outgoing TCP or HTTP traffic in your workflow environment, achieving temporary deployment for testing or other purposes.
 
