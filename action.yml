@@ -44,8 +44,8 @@ runs:
       shell: bash
       
     - if: "${{ inputs.tunnel_type == 'tcp' }}"
-      run: echo "::set-output name=tunnel-url::$( echo ${{ outputs.tunnel-url }} | tail -c 21 )"
+      run: echo "::set-output name=tunnel-url::$( echo ${{ steps.print-tunnel-url.outputs.tunnel-url }} | tail -c 21 )"
       shell: bash
     - if: "${{ inputs.save_url_to_filename != '' }}"
-      run: ${{ outputs.tunnel-url }} > ${{ inputs.save_url_to_filename }}
+      run: ${{ steps.print-tunnel-url.outputs.tunnel-url }} > ${{ inputs.save_url_to_filename }}
       shell: bash
